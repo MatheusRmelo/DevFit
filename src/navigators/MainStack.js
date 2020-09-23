@@ -2,19 +2,26 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import PreloadPage from '../pages/Preload'
+import  { useSelector } from 'react-redux'
+
 import StarterStack from './StarterStack'
 //import AppTab from './AppTab'
 
 export default () => {
     const MainStack = createStackNavigator()
+    const name = useSelector(state => state.userReducer.name) 
 
     return(
         <NavigationContainer>
-            <MainStack.Navigator screenOptions={{headerShown: false}} initialRouteName="Preload">
-                <MainStack.Screen name="Preload" component={PreloadPage} />
+            <MainStack.Navigator screenOptions={{headerShown: false}}>
                 <MainStack.Screen name="Starter" component={StarterStack} />
-                {/* <MainStack.Screen name="App" component={AppTab} /> */}
+               {/* {
+                   name 
+                   ?
+                   <MainStack.Screen name="Starter" component={StarterStack} />
+                   :
+                   <MainStack.Screen name="App" component={AppTab} />
+               } */}
             </MainStack.Navigator>
         </NavigationContainer>
     )

@@ -2,7 +2,6 @@ import React, { useState, useLayoutEffect } from 'react'
 import {
     Container,
     HeaderText,
-    NameInput,
     NextButton,
     BoldText,
     DaysArea
@@ -12,15 +11,16 @@ import { Text } from 'react-native'
 
 import DefaultButton from '../../components/DefaultButton'
 
-import { useNavigation, useNavigationState } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 
 export default () => {
-    const navigation = useNavigation()
-    const state = useNavigationState( state => state)
     const name = useSelector(state => state.users.name)
     const workoutDays = useSelector(state => state.users.workoutDays)
+
     const [workoutD, setWorkoutD] = useState(workoutDays)
+
+    const navigation = useNavigation()
     const dispatch = useDispatch()
 
     useLayoutEffect(()=>{

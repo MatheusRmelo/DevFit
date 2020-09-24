@@ -16,11 +16,9 @@ export const HeaderText = styled.Text`
     text-align:center;
 `
 export const NextButton = styled.Button``
+export const LevelArea = styled.View`
+    width:100%;
+`
 export const BoldText = styled.Text`
     font-weight: bold;
-`
-export const DaysArea = styled.View`
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
 `

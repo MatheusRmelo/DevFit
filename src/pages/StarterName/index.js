@@ -11,9 +11,10 @@ import { useNavigation } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 
 export default () => {
-    const navigation = useNavigation()
     const nameOld = useSelector(state => state.users.name)
     const [name, setName] = useState(nameOld)
+
+    const navigation = useNavigation()
     const dispatch = useDispatch()
 
     useLayoutEffect(()=>{

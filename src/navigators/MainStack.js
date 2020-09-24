@@ -9,7 +9,7 @@ import StarterStack from './StarterStack'
 
 export default () => {
     const MainStack = createStackNavigator()
-    const name = useSelector(state => state.userReducer.name) 
+    //const name = useSelector(state => state.userReducer.name) 
 
     return(
         <NavigationContainer>

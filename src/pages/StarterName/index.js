@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 export default () => {
     const navigation = useNavigation()
-    const nameOld = useSelector(state => state.userReducer.name)
+    const nameOld = useSelector(state => state.users.name)
     const [name, setName] = useState(nameOld)
     const dispatch = useDispatch()
 
@@ -32,7 +32,7 @@ export default () => {
         }
         dispatch({
             type: 'SET_NAME',
-            payload: name
+            payload: {name}
         })
         navigation.navigate('StarterDays')
         

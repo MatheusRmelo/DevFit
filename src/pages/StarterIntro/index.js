@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native'
 export default () => {
     const navigation = useNavigation()
     const start = () => {
+        //alert('dqw')
         navigation.navigate('StarterName')
     }
 

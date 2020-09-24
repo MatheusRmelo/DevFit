@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import StarterIntroPage from '../pages/StarterIntro'
 import StarterNamePage from '../pages/StarterName'
+import StarterDaysPage from '../pages/StarterDays'
 
 export default () => {
     const StaterStack = createStackNavigator()
@@ -11,6 +12,7 @@ export default () => {
         <StaterStack.Navigator >
             <StaterStack.Screen name="StarterIntro" component={StarterIntroPage} options={{headerShown: false}} />
             <StaterStack.Screen name="StarterName" component={StarterNamePage} />
+            <StaterStack.Screen name="StarterDays" component={StarterDaysPage} />
         </StaterStack.Navigator>
     )
 }

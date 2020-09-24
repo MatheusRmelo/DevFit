@@ -12,13 +12,15 @@ import { Text } from 'react-native'
 
 import DefaultButton from '../../components/DefaultButton'
 
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useNavigationState } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 
 export default () => {
     const navigation = useNavigation()
-    const nameOld = useSelector(state => state.users.name)
-    const [name, setName] = useState(nameOld)
+    const state = useNavigationState( state => state)
+    const name = useSelector(state => state.users.name)
+    const workoutDays = useSelector(state => state.users.workoutDays)
+    const [workoutD, setWorkoutD] = useState(workoutDays)
     const dispatch = useDispatch()
 
     useLayoutEffect(()=>{
@@ -29,17 +31,32 @@ export default () => {
                 marginRight:10
             }
         })
-    }, [name])
+        //navigation.setParams({workoutDays})
+    }, [workoutD])
+
     const nextAction = () => {
-        if(!name){
-            alert('Você precisa de um nome!')
+        if(!workoutD.length ){
+            alert('Você precisa treinar pelo menos 1 dia!')
             return
         }
+        navigation.navigate('StarterNivel')
+    }
+
+    const toggleDay = (d) => {
+        let newWorkoutDays = [...workoutDays]
+        if(!workoutDays.includes(d)){
+            newWorkoutDays.push(d)
+        }else{
+            newWorkoutDays = newWorkoutDays.filter(item=>item!==d)  
+        }
         dispatch({
-            type: 'SET_NAME',
-            payload: name
+            type: 'SET_WORKOUTDAYS',
+            payload:{
+                workoutDays: newWorkoutDays
+            }
         })
-        navigation.navigate('StarterDays')
+        setWorkoutD(newWorkoutDays)
+        //navigation.setParams({workoutDays: newWorkoutDays}) 
     }
 
     const widthButton = '100px'
@@ -50,25 +67,25 @@ export default () => {
             <HeaderText>Quais <BoldText>dias da semana você pretende treinar?</BoldText></HeaderText>
 
             <DaysArea>
-                <DefaultButton width={widthButton} marginBottom={marginBottomButton}>
+                <DefaultButton bgColor={workoutDays.includes(1)?'#A5E8BC':false} onPress={()=>toggleDay(1)} width={widthButton} marginBottom={marginBottomButton} underlayColor="#CCC">
                     <Text>Segunda</Text>
                 </DefaultButton>
-                <DefaultButton width={widthButton} marginBottom={marginBottomButton}>
+                <DefaultButton bgColor={workoutDays.includes(2)?'#A5E8BC':false} onPress={()=>toggleDay(2)} width={widthButton} marginBottom={marginBottomButton} underlayColor="#CCC">
                     <Text>Terça</Text>
                 </DefaultButton>
-                <DefaultButton width={widthButton} marginBottom={marginBottomButton}>
+                <DefaultButton bgColor={workoutDays.includes(3)?'#A5E8BC':false} onPress={()=>toggleDay(3)} width={widthButton} marginBottom={marginBottomButton} underlayColor="#CCC">
                     <Text>Quarta</Text>
                 </DefaultButton>
-                <DefaultButton width={widthButton} marginBottom={marginBottomButton}>
+                <DefaultButton bgColor={workoutDays.includes(4)?'#A5E8BC':false} onPress={()=>toggleDay(4)} width={widthButton} marginBottom={marginBottomButton} underlayColor="#CCC">
                     <Text>Quinta</Text>
                 </DefaultButton>
-                <DefaultButton width={widthButton} marginBottom={marginBottomButton}>
+                <DefaultButton bgColor={workoutDays.includes(5)?'#A5E8BC':false} onPress={()=>toggleDay(5)} width={widthButton} marginBottom={marginBottomButton} underlayColor="#CCC">
                     <Text>Sexta</Text>
                 </DefaultButton>
-                <DefaultButton width={widthButton} marginBottom={marginBottomButton}>
+                <DefaultButton bgColor={workoutDays.includes(6)?'#A5E8BC':false} onPress={()=>toggleDay(6)} width={widthButton} marginBottom={marginBottomButton} underlayColor="#CCC">
                     <Text>Sábado</Text>
                 </DefaultButton>
-                <DefaultButton width={widthButton} marginBottom={marginBottomButton}>
+                <DefaultButton bgColor={workoutDays.includes(0)?'#A5E8BC':false} onPress={()=>toggleDay(0)} width={widthButton} marginBottom={marginBottomButton} underlayColor="#CCC">
                     <Text>Domingo</Text>
                 </DefaultButton>
             </DaysArea>

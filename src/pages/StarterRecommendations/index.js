@@ -32,17 +32,30 @@ export default () => {
             }
         })
         //navigation.setParams({workoutDays})
-    }, [workouts])
+    }, [workout])
 
     const nextAction = () => {
-        // if( level.trim() === '' ){
-        //     alert('Você precisa escolher uma opção.')
-        //     return
-        // }
-        // navigation.navigate('StarterRecommendations')
+        navigation.navigate('AppTab')
     }
 
-   
+    const addWorkout = (item) => {
+        let newList = [...workout]
+        if(workout.findIndex(i => i.id===item.id) < 0){
+            newList.push(item)
+            setWorkout(newList)
+            dispatch({
+                type: 'ADD_WORKOUT',
+                payload: {workout:item}
+            })
+        }else{
+            newList = newList.filter(i => i.id !== item.id)
+            setWorkout(newList)
+            dispatch({
+                type: 'DEL_WORKOUT',
+                payload: {workout:item}
+            })
+        }
+    }
 
    
     return(
@@ -53,7 +66,7 @@ export default () => {
 
             <WorkoutList
                 data={workoutJson}
-                renderItem = {({item})=><Workout data={item} />} 
+                renderItem = {({item})=><Workout data={item} addAction={()=>addWorkout(item)} />} 
                 keyExtractor = {item => item.id}
             />
 

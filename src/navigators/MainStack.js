@@ -15,7 +15,7 @@ export default () => {
         <NavigationContainer>
             <MainStack.Navigator screenOptions={{headerShown: false}}>
                 {/* <MainStack.Screen name="Starter" component={StarterStack} />
-                <MainStack.Screen name="App" component={AppTab} /> */}
+                <MainStack.Screen name="App" component={AppTab} options={{headerShown: false}} /> */}
                 {
                    name 
                    ?

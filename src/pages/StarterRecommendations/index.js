@@ -35,7 +35,7 @@ export default () => {
     }, [workout])
 
     const nextAction = () => {
-        navigation.navigate('App')
+        navigation.replace('App')
     }
 
     const addWorkout = (item) => {

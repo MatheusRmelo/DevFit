@@ -35,7 +35,7 @@ export default () => {
     }, [workout])
 
     const nextAction = () => {
-        navigation.navigate('AppTab')
+        navigation.navigate('App')
     }
 
     const addWorkout = (item) => {

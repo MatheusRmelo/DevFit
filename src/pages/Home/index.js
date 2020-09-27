@@ -1,12 +1,86 @@
-import React from 'react'
-import { Container } from './styles'
+import React, { useState, useLayoutEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
-import { Text } from 'react-native'
+import { 
+    Container,
+    ConfigButtonArea,
+    ConfigButtonImage,
+    Legend,
+    LegendBox,
+    LegendItem,
+    LegendText
+ } from './styles'
+
+import HomeMonthScroll from '../../components/HomeMonthScroll'
+import HomeDaysScroll from '../../components/HomeDaysScroll'
+import HomeDaysStatus from '../../components/HomeDaysStatus'
 
 export default () => {
+    const navigation = useNavigation()
+
+    let today = new Date()
+    const [selectedMonth, setSelectedMonth] = useState(today.getMonth())
+
+    const ConfigButton = () => {
+
+        const btnAction = () => {
+            navigation.navigate('HomeConfig')
+        }
+
+        return(
+            <ConfigButtonArea onPress={btnAction}>
+                <ConfigButtonImage source={require('../../assets/config.png')} />
+            </ConfigButtonArea>
+        )
+    }
+
+    useLayoutEffect(()=>{
+        navigation.setOptions({
+            title: 'Seu progresso diário',
+            headerRight: ()=>(<ConfigButton />),
+            headerRightContainerStyle:{
+                marginRight:8
+            },
+            headerTitleAlign: 'center'
+        })
+        //navigation.setParams({workoutDays})
+    }, [])
+
+    
     return(
         <Container>
-            <Text>Página HOme</Text>
+            <HomeMonthScroll
+                selectedMonth={selectedMonth}
+                setSelectedMonth={setSelectedMonth}
+            />
+            <HomeDaysScroll />
+            <HomeDaysStatus />
+
+            <LegendText>Mes: {selectedMonth}</LegendText>
+
+            <Legend>
+                <LegendText>Legenda:</LegendText>
+                <LegendItem>
+                    <LegendBox color='#B5EEFF'></LegendBox>
+                    <LegendText>Hoje</LegendText>
+                </LegendItem>
+                <LegendItem>
+                    <LegendBox color='#B5FFE8'></LegendBox>
+                    <LegendText>Treino feito</LegendText>
+                </LegendItem>
+                <LegendItem>
+                    <LegendBox color='#FFB5B5'></LegendBox>
+                    <LegendText>Treino perdido</LegendText>
+                </LegendItem>
+                <LegendItem>
+                    <LegendBox color='#E4E4E4' style={{opacity: 0.2}}></LegendBox>
+                    <LegendText>Dia de descanso</LegendText>
+                </LegendItem>
+                <LegendItem>
+                    <LegendBox color='#E4E4E4'></LegendBox>
+                    <LegendText>Dia futuro</LegendText>
+                </LegendItem>
+            </Legend>
         </Container>
     )
 }

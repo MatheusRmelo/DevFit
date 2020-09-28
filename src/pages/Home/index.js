@@ -15,11 +15,16 @@ import HomeMonthScroll from '../../components/HomeMonthScroll'
 import HomeDaysScroll from '../../components/HomeDaysScroll'
 import HomeDaysStatus from '../../components/HomeDaysStatus'
 
+import { useSelector } from 'react-redux'
+
 export default () => {
     const navigation = useNavigation()
 
     let today = new Date()
     const [selectedMonth, setSelectedMonth] = useState(today.getMonth())
+    const [selectedDay, setSelectedDay] = useState(today.getDate())
+    const dailyProgress = useSelector(state => state.users.dailyProgress)
+    const workoutDays = useSelector(state => state.users.workoutDays)
 
     const ConfigButton = () => {
 
@@ -53,11 +58,20 @@ export default () => {
                 selectedMonth={selectedMonth}
                 setSelectedMonth={setSelectedMonth}
             />
-            <HomeDaysScroll />
+            <HomeDaysScroll 
+                selectedMonth={selectedMonth}
+                selectedDay={selectedDay}
+                setSelectedDay={setSelectedDay}
+
+
+                dailyProgress={dailyProgress}
+                workoutDays={workoutDays}
+            />
             <HomeDaysStatus />
 
             <LegendText>Mes: {selectedMonth}</LegendText>
-
+            <LegendText>Day: {selectedDay}</LegendText>
+            
             <Legend>
                 <LegendText>Legenda:</LegendText>
                 <LegendItem>

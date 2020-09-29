@@ -67,11 +67,21 @@ export default () => {
                 dailyProgress={dailyProgress}
                 workoutDays={workoutDays}
             />
-            <HomeDaysStatus />
+            <HomeDaysStatus
+                selectedMonth={selectedMonth}
+                selectedDay={selectedDay}
+                setSelectedDay={setSelectedDay}
+                dailyProgress={dailyProgress}
+                workoutDays={workoutDays}
+
+                addProgress={()=>dispatch({type: 'ADD_PROGRESS', payload:{date}})}
+                delProgress={()=>dispatch({type: 'DEL_PROGRESS', payload:{date}})}
+                goToWorkout = {()=>navigation.navigate('WorkoutStack')}
+            />
 
             <LegendText>Mes: {selectedMonth}</LegendText>
             <LegendText>Day: {selectedDay}</LegendText>
-            
+
             <Legend>
                 <LegendText>Legenda:</LegendText>
                 <LegendItem>

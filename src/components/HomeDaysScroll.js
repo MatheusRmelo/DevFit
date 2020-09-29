@@ -105,7 +105,7 @@ export default (props) => {
         }
 
         return(
-            <DayButton width={dayW} onPress={onPress} underlayColor="transparent">
+            <DayButton width={dayW} onPress={()=>setSelectedDay(day)} underlayColor="transparent">
                 <DayItem style={{opacity, backgroundColor: bgColor}}>
                     <DayText>{day}</DayText>
                 </DayItem>

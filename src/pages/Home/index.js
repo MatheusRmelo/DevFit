@@ -35,7 +35,7 @@ export default () => {
         }
 
         return(
-            <ConfigButtonArea onPress={btnAction}>
+            <ConfigButtonArea onPress={btnAction} underlayColor="transparent">
                 <ConfigButtonImage source={require('../../assets/config.png')} />
             </ConfigButtonArea>
         )
@@ -44,7 +44,7 @@ export default () => {
     useLayoutEffect(()=>{
         navigation.setOptions({
             title: 'Seu progresso diário',
-            headerRight: ()=>(<ConfigButton underlayColor="transparent" />),
+            headerRight: ()=>(<ConfigButton />),
             headerRightContainerStyle:{
                 marginRight:8
             },

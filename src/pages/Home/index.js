@@ -15,7 +15,7 @@ import HomeMonthScroll from '../../components/HomeMonthScroll'
 import HomeDaysScroll from '../../components/HomeDaysScroll'
 import HomeDaysStatus from '../../components/HomeDaysStatus'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default () => {
     const navigation = useNavigation()
@@ -25,6 +25,8 @@ export default () => {
     const [selectedDay, setSelectedDay] = useState(today.getDate())
     const dailyProgress = useSelector(state => state.users.dailyProgress)
     const workoutDays = useSelector(state => state.users.workoutDays)
+
+    const dispatch = useDispatch()
 
     const ConfigButton = () => {
 
@@ -42,7 +44,7 @@ export default () => {
     useLayoutEffect(()=>{
         navigation.setOptions({
             title: 'Seu progresso diário',
-            headerRight: ()=>(<ConfigButton />),
+            headerRight: ()=>(<ConfigButton underlayColor="transparent" />),
             headerRightContainerStyle:{
                 marginRight:8
             },
@@ -74,8 +76,8 @@ export default () => {
                 dailyProgress={dailyProgress}
                 workoutDays={workoutDays}
 
-                addProgress={()=>dispatch({type: 'ADD_PROGRESS', payload:{date}})}
-                delProgress={()=>dispatch({type: 'DEL_PROGRESS', payload:{date}})}
+                addProgress={(date)=>dispatch({type: 'ADD_PROGRESS', payload:{date}})}
+                delProgress={(date)=>dispatch({type: 'DEL_PROGRESS', payload:{date}})}
                 goToWorkout = {()=>navigation.navigate('WorkoutStack')}
             />
 

@@ -31,13 +31,12 @@ const ButtonText = styled.Text`
 const BalloonText = styled.Text`
     font-size: 12px;
     align-self: center;
-    margin-top: 10px;
+    margin-top: 8px;
 `
 const Strong = styled.Text`
     font-weight: bold;
 `
 export default (props) => {
-
     let today = new Date()
     today.setHours(0)
     today.setMinutes(0)
@@ -50,8 +49,8 @@ export default (props) => {
     let thisYear = thisDate.getFullYear()
     let thisMonth = thisDate.getMonth() + 1
     let thisDay = thisDate.getDate()
-    thisMonth = thisMonth<10 ? '0'+thisMonth: thisMonth
-    thisDay = thisDay<10 ? '0'+thisDay: thisDay
+    thisMonth = (thisMonth<10) ? '0'+thisMonth: thisMonth
+    thisDay = (thisDay<10) ? '0'+thisDay: thisDay
     let dFormated= `${thisYear}-${thisMonth}-${thisDay}`
 
     let dayOff = false
@@ -59,7 +58,7 @@ export default (props) => {
     let isFuture = false
     let isDone = false
 
-    if( !props.workoutDays.includes(thisDate.getDate())){
+    if( !props.workoutDays.includes(thisDate.getDay())){
         dayOff = true
     }else if(thisDate.getTime() > today.getTime()){
         isFuture = true
@@ -75,12 +74,41 @@ export default (props) => {
         isToday = true
     }
 
+
     const setDone = () =>{
         props.addProgress( dFormated )
     }
     const setUnDone = () => {
         props.delProgress(dFormated)
     }
+
+    const [timeLeft, setTimeLeft] = useState('')
+
+    useEffect(()=>{
+        const timerFunction = ()=>{
+            let now = Date.now()
+            let endToday = new Date()
+            endToday.setHours(23)
+            endToday.setMinutes(59)
+            endToday.setSeconds(59)
+            endToday = endToday.getTime()
+            let diff = endToday - now
+
+            let h = Math.floor(diff / (1000 * 60 * 60))
+            let m = Math.floor((diff / (1000 * 60))-(h*60)) 
+            let s = Math.floor((diff / 1000) - (m*60)-((h*60)*60))
+
+            h = h<10 ? '0'+h : h
+            m = m<10 ? '0'+m : m
+            s = s<10 ? '0'+s : s
+
+            setTimeLeft(`${h}h ${m}m ${s}s`)
+        }
+        let timer = setInterval(timerFunction, 1000)
+        timerFunction()
+
+        return ()=>clearInterval(timer)
+    }, [])
 
     return (
         <>
@@ -113,7 +141,7 @@ export default (props) => {
                 {!dayOff && !isFuture && !isDone && isToday &&
                     <>
                         <BalloonBigText><Strong>HOJE TEM TREINO!</Strong></BalloonBigText>
-                        <BalloonText>Você tem ... para treinar</BalloonText>
+                        <BalloonText>Você tem {timeLeft} para treinar</BalloonText>
                         <DefaultButton onPress={props.goToWorkout} underlayColor="#4AC34E" bgColor="#4AC34E" style={{marginTop:16}}>
                             <ButtonText>INICIAR TREINO</ButtonText>
                         </DefaultButton>

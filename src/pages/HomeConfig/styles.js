@@ -40,3 +40,4 @@ export const LevelItem = styled.TouchableHighlight`
     padding: 0 8px;
 `
 export const LevelItemText = styled.Text``
+export const ResetButton = styled.Button``

@@ -19,7 +19,10 @@ export default () => {
                 {
                    name 
                    ?
-                    <MainStack.Screen name="App" component={AppTab} />
+                    <>
+                        <MainStack.Screen name="App" component={AppTab} />
+                        <MainStack.Screen name="Starter" component={StarterStack} />
+                    </>
                    :
                    <>
                     <MainStack.Screen name="Starter" component={StarterStack} />

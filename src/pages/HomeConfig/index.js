@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, CommonActions } from '@react-navigation/native'
 
 import { 
     Container,
@@ -9,7 +9,8 @@ import {
     DayItem,
     DayItemText,
     LevelItem,
-    LevelItemText
+    LevelItemText,
+    ResetButton
  } from './styles'
 
 import HomeMonthScroll from '../../components/HomeMonthScroll'
@@ -49,6 +50,21 @@ export default () => {
         })
         //navigation.setParams({workoutDays})
     }, [])
+
+    const resetAction = () => {
+        dispatch({type: 'RESET'})
+        navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'Starter',
+                },
+              ],
+            })
+        );
+        //navigation.navigate('Starter')
+    }
 
     
     return(
@@ -93,6 +109,10 @@ export default () => {
                     <LevelItemText>Avançado</LevelItemText>
                 </LevelItem>
             </ListArea>
+
+
+            <Label>Você quer resetar tudo?</Label>
+            <ResetButton title="Resetar tudo" onPress={resetAction} />
         </Container>
     )
 }

@@ -20,12 +20,16 @@ export default () => {
     const dispatch = useDispatch()
 
 
-    const AddWorkoutButton = () => {
+    const AddWorkoutButton = ({onPress}) => {
         return(
-            <ButtonArea>
+            <ButtonArea onPress={onPress} underlayColor="transparent">
                 <ButtonImage source={require('../../assets/add.png')} />
             </ButtonArea>
         )
+    }
+
+    const btnAction = () => {
+        navigation.navigate('EditWorkout')
     }
 
 
@@ -33,11 +37,15 @@ export default () => {
         navigation.setOptions({
             title: 'Meus treinos',
             headerTitleAlign: 'center',
-            headerRight:()=><AddWorkoutButton />,
+            headerRight:()=><AddWorkoutButton onPress={btnAction} />,
             headerRightContainerStyle: {marginRight:8}
         })
         //navigation.setParams({workoutDays})
     }, [])
+
+    const editWorkout = (workout) => {
+        navigation.navigate('EditWorkout', {workout})
+    }
 
     
     return(
@@ -45,7 +53,7 @@ export default () => {
             <WorkoutList 
                 data={myWorkouts}
                 renderItem={({item})=>
-                    <Workout data={item} editAction={()=>{}} delAction={()=>{}} />
+                    <Workout data={item} editAction={()=>editWorkout(item)} delAction={()=>dispatch({type:'DEL_WORKOUT', payload:{workout:item}})} />
                 }
             />
         </Container>

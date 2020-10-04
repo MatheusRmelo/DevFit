@@ -67,6 +67,9 @@ export default (props) => {
     const delWorkout = () => {
         props.delAction()
     }
+    const goWorkout = () => {
+        props.goAction()
+    }
     return(
         <Workout>
             <WorkoutInfo>
@@ -96,6 +99,12 @@ export default (props) => {
                     props.delAction &&
                     <WorkoutButton onPress={()=>delWorkout()} underlayColor='trasnparent'>
                         <WorkoutButtonImage source={require('../assets/trash-black.png')} />
+                    </WorkoutButton>
+                }
+                {
+                    props.goAction &&
+                    <WorkoutButton onPress={()=>goWorkout()} underlayColor='trasnparent'>
+                        <WorkoutButtonImage source={require('../assets/play-black.png')} />
                     </WorkoutButton>
                 }
                 

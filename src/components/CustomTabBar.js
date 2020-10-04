@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/native'
 
 import { Text } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
+import { useSelector, useDispatch } from 'react-redux'
 
 const TabBarArea = styled.SafeAreaView`
     flex-direction: row;
@@ -41,26 +42,40 @@ const TabBallImage = styled.Image`
 
 export default (props) => {
     const navigation = useNavigation()
+    const tabBarVisible = useSelector(state => state.users.tabBarVisible)
+    const dispatch = useDispatch()
+
+    const handleWorkout = (item) => {
+        dispatch({type: 'SET_TABBAR', payload:{tabBarVisible:false}})
+        navigation.navigate(item.route)
+    }
 
     return(
-        <TabBarArea>
-            {props.items.map(item=>(
-                <TabBarItem key={item.route}>
-                    {item.type === 'regular' &&
-                        <TabRegular underlayColor='transparent' onPress={()=>navigation.navigate(item.route)}>
-                            <>
-                                <TabImage source={item.icon} />
-                                <Text>{item.text}</Text>
-                            </>
-                        </TabRegular>
-                    }
-                    {item.type === 'big' &&
-                        <TabBall underlayColor='green' onPress={()=>navigation.navigate(item.route)}>
-                            <TabBallImage source={item.icon} />
-                        </TabBall>
-                    } 
-                </TabBarItem>
-            ))}
-        </TabBarArea>
+        <>
+            {
+                tabBarVisible &&
+                <TabBarArea>
+
+                    {props.items.map(item=>(
+                        <TabBarItem key={item.route}>
+                            {item.type === 'regular' &&
+                                <TabRegular underlayColor='transparent' onPress={()=>navigation.navigate(item.route)}>
+                                    <>
+                                        <TabImage source={item.icon} />
+                                        <Text>{item.text}</Text>
+                                    </>
+                                </TabRegular>
+                            }
+                            {item.type === 'big' &&
+                                <TabBall underlayColor='green' onPress={()=>handleWorkout(item)}>
+                                    <TabBallImage source={item.icon} />
+                                </TabBall>
+                            } 
+                        </TabBarItem>
+                    ))}
+                </TabBarArea>
+            }
+        </>
+        
     )
 }

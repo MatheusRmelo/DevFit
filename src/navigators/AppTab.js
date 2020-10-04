@@ -5,7 +5,7 @@ import CustomTabBar from '../components/CustomTabBar'
 
 import HomeStack from './HomeStack'
 import TempScreen from '../pages/TempScreen'
-//import WorkoutStack from './WorkoutStack'
+import WorkoutStack from './WorkoutStack'
 import MyWorkoutsStack from './MyWorkoutStack'
 
 const Tab = createBottomTabNavigator()
@@ -34,7 +34,7 @@ const items = [
 export default () => (
     <Tab.Navigator tabBar={(props)=> <CustomTabBar {...props} items={items} />}>
         <Tab.Screen name="HomeStack" component={HomeStack} />
-        <Tab.Screen name="Workout" component={TempScreen} />
+        <Tab.Screen name="Workout" component={WorkoutStack}/>
         <Tab.Screen name="MyWorkouts" component={MyWorkoutsStack} />
     </Tab.Navigator>   
 )

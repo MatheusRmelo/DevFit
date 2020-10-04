@@ -23,8 +23,10 @@ export default () => {
     let today = new Date()
     const [selectedMonth, setSelectedMonth] = useState(today.getMonth())
     const [selectedDay, setSelectedDay] = useState(today.getDate())
+    //const [tabBarVisible, setTabBarVisible] = useState(useSelector(state => state.users.tabBarVisible))
     const dailyProgress = useSelector(state => state.users.dailyProgress)
     const workoutDays = useSelector(state => state.users.workoutDays)
+    const tabBarVisible = useSelector(state => state.users.tabBarVisible)
 
     const dispatch = useDispatch()
 
@@ -50,8 +52,15 @@ export default () => {
             },
             headerTitleAlign: 'center'
         })
+        if(!tabBarVisible){
+            dispatch({type: 'SET_TABBAR', payload:{tabBarVisible:true}})
+        }
         //navigation.setParams({workoutDays})
     }, [])
+    const handleWorkout = () => {
+        dispatch({type: 'SET_TABBAR', payload:{tabBarVisible:false}})
+        navigation.navigate('Workout')
+    }
 
     
     return(
@@ -78,7 +87,7 @@ export default () => {
 
                 addProgress={(date)=>dispatch({type: 'ADD_PROGRESS', payload:{date}})}
                 delProgress={(date)=>dispatch({type: 'DEL_PROGRESS', payload:{date}})}
-                goToWorkout = {()=>navigation.navigate('WorkoutStack')}
+                goToWorkout = {handleWorkout}
             />
 
             <LegendText>Mes: {selectedMonth}</LegendText>
